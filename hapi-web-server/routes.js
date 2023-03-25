@@ -28,6 +28,20 @@ const routes = [
     },
   },
   {
+    method: "GET",
+    path: "/hello/{name?}",
+    handler: (req, h) => {
+      const { name = "stranger" } = req.params;
+      const { lang } = req.query;
+
+      if (lang === "id") {
+        return `Hai, ${name}!`;
+      }
+
+      return `Hello, ${name}!`;
+    },
+  },
+  {
     method: "*",
     path: "/{any*}",
     handler: (req, h) => {
