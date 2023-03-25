@@ -14,6 +14,14 @@ const routes = [
     },
   },
   {
+    method: "POST",
+    path: "/login",
+    handler: (req, h) => {
+      const { username, pass } = req.payload;
+      return `Welcome ${username}!`;
+    },
+  },
+  {
     method: "GET",
     path: "/about",
     handler: (req, h) => {
