@@ -70,4 +70,42 @@ const getNoteByIdHandler = (req, h) => {
   return res;
 };
 
-module.exports = { addNoteHandler, getAllNotesHandler, getNoteByIdHandler };
+const editNoteByIdHandler = (req, h) => {
+  const { id } = req.params;
+
+  const { title, tags, body } = req.payload;
+  const updatedAt = new Date().toISOString();
+
+  const index = notes.findIndex((note) => note.id === id);
+
+  if (index !== -1) {
+    notes[index] = {
+      ...notes[index],
+      title,
+      tags,
+      body,
+      updatedAt,
+    };
+
+    const res = h.response({
+      status: 'success',
+      message: 'Catatan berhasil diperbarui',
+    });
+    res.code(200);
+    return res;
+  }
+
+  const res = h.response({
+    status: 'fail',
+    message: 'Gagal memperbarui catatan. Id tidak ditemukan',
+  });
+  res.code(404);
+  return res;
+};
+
+module.exports = {
+  addNoteHandler,
+  getAllNotesHandler,
+  getNoteByIdHandler,
+  editNoteByIdHandler,
+};
